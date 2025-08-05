@@ -1,0 +1,29 @@
+.song-title {
+    width: 400px
+}
+
+body {
+    background: #dddddd
+}
+
+pre {
+    font-size: large;
+    font-weight: bold;
+    font-family: "Courier", Monospace;
+    color: blue;
+}
+
+/* class selectors: */
+.chord-green {
+    font-size: large;
+    font-weight: bold;
+    font-family: "Courier", Monospace;
+    color: green;
+}
+
+.chord-red {
+    font-size: large;
+    font-weight: bold;
+    font-family: "Courier", Monospace;
+    color: red;
+}
