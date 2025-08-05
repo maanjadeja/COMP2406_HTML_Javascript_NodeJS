@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2406 Tutorial</title>
+<link href="template.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.code1 {	font-family: "Courier New", Courier, monospace;
+}
+.requirement {	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {	font-weight: bold;
+	background-color: #F6CA54
+}
+</style>
+</head>
+
+<body>
+<p class="header">COMP 2406 - Fall 2022/Winter 2023 Tutorial 04 </p>
+<p class="header subheader">Hosting Remote Servers on Openstack</p>
+<hr/>
+<p>&copy; L.D. Nel 2023</p>
+<hr />
+<p class="red">Revisions -none yet</p>
+<p>&nbsp;</p>
+<hr />
+<p class="segment-header">Description:</p>
+<p>The purpose of this tutorial is to get you to follow the instructions posted on the SCS website and get a node.js server running on one of our &quot;cloud&quot; openstack machines. </p>
+<p>If you run your server on openstack you, and others, will be able to reach it using a Carleton IP address. This will allow us to run servers that users on different machines can access. This will be important in future assignments and tutorials  when we want clients to collaborate like in a chat server or multi-player online game. </p>
+<p>SCS has posted detailed instructions and some videos on creating and launching an openstack linux image. We've added some additional content here about migrating your node.js code to that image. </p>
+<p>The task in this tutorial is to navigate the SCS instructions and get your server running. Andew Pullin made an additional video for us last term and I've posted that with the tutorial. Note for this term we will be using the COMP2406-W23 project and image. In Andrew's video he will be referring to COMP2406-F22 instead. Actually for this tutorial is does not matter which one you use but COMP2406-W23 is the intended, most current, one.</p>
+<p>Here we are presenting a very basic workflow to move files to the Openstack image and launch them. As such, we don't need to connect via a windowed graphical interface. If you are planning to do code development on the remote openstack machine you might want to connect with a client like X2GO or use one of the other techniques that Andrew describes in his tutorial videos. In the past we have found that windowed environments like that can be quite slow and perhaps frustrating to use.</p>
+<p>Regardless, if you have a preferred workflow for achieving the tasks in this tutorial please let us know through the Discord server so others can try them as well.</p>
+<p>&nbsp;</p>
+<p><span class="red">Important: tutorials are meant to be started and submitted as homework. You can come and get help each week at the your registered tutorial session but it's best to get started before the session.</span></p>
+<p class="red">&nbsp;</p>
+<p class="red">Tutorial Grading: To get credit for weekly tutorials you need to submit to brightspace your code and a ReadMe.txt file with at least your name, student number and the link to your YouTube screen capture demonstration video. The video should have sound narration and demonstrate that you have met the tutorial requirements. (Make sure your video is &quot;unlisted&quot; and not &quot;private&quot; on YouTube - otherwise we won't be able to view it and it will be counted as missing. Submit a single .zip file with all your contents to Brightspace. Brightspace should allow you to resubmit your file up until the due time and will only keep the most recent submission. Grade is 0,1, or 2 as follows:</p>
+<table border="1">
+  <tr>
+    <th width="83">Mark</th>
+    <th width="716">Tutorial Grading</th>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement_danger">0</span></h1>
+      <p>marks</p></td>
+    <td><p><span class="requirement_danger">No submission or incomplete submission. Submissions without accompanying video get a mark of 0</span>.</p>
+      <p>Note: mark is 0 if any of the following are true:<br>
+      <ul>
+        <li>code missing or won't compile and launch.</li>
+        <li>No demonstration video link or link is broken (e.g. private).</li>
+        <li class="red">NEW: Video must be screen capture (not filming your laptop screen with your phone, for example).</li>
+        <li>Work is copied (not unique).</li>
+        <li>No ReadMe.txt file containing YouTube video link</li>
+        <li>Non .zip compression format (only  .zip is accepted)</li>
+        <li>If using NPM modules you MUST NOT submit the <span class="code">node_modules</span> directory but you MUST submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. </li>
+      </ul>
+      <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement_warning">1</span></h1>
+      <p>mark</p></td>
+    <td><p><span class="requirement_warning">Some, but not enough, requirements met or demonstrated</span>.</p>
+      <p>Note: mark is only 1 if any of the following are true:<br>
+      <ul>
+        <li>Video has no voice narration.</li>
+        <li>Cannot make out (see) your code or mouse in your video.</li>
+        <li>Video is too long (keep under 5 mins - like a live demo).</li>
+        <li>Video is not a demo but rather just shows you coding.</li>
+        <li>Not all requested problems attempted and demonstrated.</li>
+        <li>Code works but it's not good programming style.</li>
+      </ul>
+      <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement">2</span></h1>
+      <p>marks</p></td>
+    <td><p><span class="requirement">All requirements met and demonstrated in accompanying video for required problems.</span></p>
+      <p>Does not include problems labelled as &quot;Optional&quot;</p></td>
+  </tr>
+</table>
+<p class="red"><br>
+</p>
+<p class="segment-header"></p>
+<p class="red"></p>
+<p class="red"><br />
+</p>
+<hr/>
+<p class="segment-header">Preliminary Instructions:<br />
+</p>
+<p class="segment-header">VPN</p>
+<p>Remember our scs openstack images are accessible directly if you are on campus and connected to  Carleton's <span class="bold">cu wireless </span>network. If you want to perform the actions in this tutorial from home you must first establish a VPN (Virtual Private Network) connection to Carleton. The instructions for using VPN are described in Andrew's tutorial video and also here: </p>
+<p><a href="https://carleton.ca/its/help-centre/remote-access/">https://carleton.ca/its/help-centre/remote-access/</a></p>
+<p>If you are at home start by estabishing a VPN connection before proceeding with the tutorial exercises.</p>
+<hr>
+<p>&nbsp;</p>
+<p class="segment-header">Problem 0: Creating and Launching an Openstack Image</p>
+<p>Andrew Pullin has created some tutorial videos on creating and launching openstack images. He also did a dedicated Zoom session on doing this for the 2406 course last term. A recording of his Zoom session is on YouTube here:</p>
+<iframe width="187" height="105" src="https://www.youtube.com/embed/d0hL_xFS5uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>There are also his step-by-step &quot;Getting Started With Openstack &quot; guide on thescs technical suppport page here:</p>
+<p><a href="https://carleton.ca/scs/tech-support/scs-open-stack/">https://carleton.ca/scs/tech-support/scs-open-stac</a></p>
+<p>Using this video and guide as a reference create and launch an Openstack image. Ensure that you are using the 2406 image described in Andrew's YouTube video (for winter 2023 there should be a more recent image available: COMP2406-W23) and also make sure you follow the steps in the guide about associating a Carleton floating IP address with your image. With that you will be able to reach your servers using a Carleton IP address like http://134.117.XXX.XXX/index.html</p>
+<p>&nbsp;</p>
+<p class="red">IMPORTANT: The approach and screen captures in what follows shows just one way of doing things. There are other approaches and you can use whatever works for you.</p>
+<p>&nbsp;</p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 1: Accessing your Openstack Image from your Local Machine</p>
+<p>Andrew descibes several ways to access your Openstack image from your local machine. One way is using a ssh secure shell from a command line terminal application. On windows the free utility <span class="bold">Putty</span> is very popular for this. On Mac and Linux machines you can use the built in terminal application. (More recently Window's Powershell might also allow SSH access but might require installing some modules -let us know if you use it what is required.)</p>
+<h2>&nbsp;</h2>
+<h2>Mac/Linux:</h2>
+<p>Use the built in terminal application to log into your remote openstack image with the <span class="code">ssh</span> command at your floating IP address (the openstack images all have a <span class="code">student</span> user with default password <span class="code">student</span>):</p>
+<p class="code">ssh student@134.117.217.107</p>
+<p><img src="images/problem2-1.png" width="919" height="179" alt=""/></p>
+<p>&nbsp;</p>
+<h2>Windows:</h2>
+<p>Use the PuTTy utility on our lab machines or install PuTTy on your own machine (see: <a href="https://carleton.ca/scs/technical-support/software/">https://carleton.ca/scs/technical-support/software/</a>).</p>
+<p>You create an SSH session in Putty to connect to your Openstack image using it's floating IP address:</p>
+<p><img src="images/putty1.png" width="595" height="541" alt=""/></p>
+<p>&nbsp;</p>
+<p>When you open the session you should have a terminal on the remote machine where you can log into the <span class="code">student</span> user account:</p>
+<p><img src="images/putty2.png" width="979" height="247" alt=""/></p>
+<p>&nbsp;</p>
+<p>Now that you have established a connection to your openstack image we can proceed to building our server application.</p>
+<p>Again, Andrew's YouTube video describes other ways of accessing your Openstack machine as well.</p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 2: Moving Server Files to Openstack</p>
+<p>Next we want to move the tutorial 04 demo server code files to the openstack virtual machine. There are probably many ways to do this as well (and let us know what your favourite is). Students using Windows often do this with the free WinSCP utility. A popular app for Mac OSX is Cyberduck. Filezilla is a popular cross platform tool. Here however we are just going to move files using command line scp secure copy command.</p>
+<h2>&nbsp;</h2>
+<h2>Mac/Linux:</h2>
+<p>Here we will just use the remote copy command through a terminal. </p>
+<p>Open a new terminal window and again log into your openstack image:</p>
+<p><img src="images/problem2-1.png" width="919" height="179" alt=""/></p>
+<p>&nbsp;</p>
+<p>Create a directory for your openstack <span class="code">student</span> user where we will put the code we want to execute (here I've named the directory: <span class="code">2406</span>). Find the full name of the directory path with the <span class="code">pwd</span> (print working directory) command:</p>
+<p><img src="images/problem2-2.png" width="504" height="48" alt=""/></p>
+<p>&nbsp;</p>
+<p>On your local machine open a command terminal to where your copy of the <span class="code">tut04_demo_server.zip</span>  demo code is located. You can copy the file to the openstack machine with the <span class="code">scp</span> command. The syntax is<br>
+  <span class="code">scp /path/to/local/file user@remote_host:/path/to/remote/file</span>.</p>
+<p><img src="images/problem2-3.png" width="1033" height="145" alt=""/></p>
+<p>&nbsp;</p>
+<p>On the console logged into your openstack machine verify that the <span class="code">tut04_demo_server.zip</span> file is now on your openstack machine:</p>
+<p><img src="images/problem2-4.png" width="653" height="178" alt=""/></p>
+<p class="code">&nbsp;</p>
+<h2>Windows:</h2>
+<p>Probably the favourite tool for doing scp copies on windows is the WinSCP utility. (see: <a href="https://carleton.ca/scs/technical-support/software/">https://carleton.ca/scs/technical-support/software/</a>). Like PuTTy it should be installed on the lab Window's machines or you can install it on your own machine.</p>
+<p>Again you create a session to connect to your remote Openstack image using its floating IP address:</p>
+<p><img src="images/winscp-login.png" width="550" height="369" alt=""/></p>
+<p>&nbsp;</p>
+<p>Once you login you can move files back and forth between a local directory and a directory on the remote machine (note in this screen capture we are transferring a different file):</p>
+<p><img src="images/winscp-upload1.png" width="1032" height="435" alt=""/></p>
+<h2>&nbsp;</h2>
+<p><img src="images/winscp-upload2.png" width="1039" height="302" alt=""/></p>
+<h2>&nbsp;</h2>
+<h2>&nbsp;</h2>
+<h2>Everyone:</h2>
+<p>Once you have the demo code zip file on your remote machine unzip the file with</p>
+<p> <span class="code">unzip tut04_demo_server.zip</span></p>
+<p>Verify that your unzipped server is now on your openstack machine:</p>
+<p><img src="images/problem2-5.png" alt=""/></p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 3: Running Your Server</p>
+<p>&nbsp;</p>
+<p>In your openstack console navigate to the directory where your demo server is located:</p>
+<p><img src="images/problem3-1.png" width="549" height="55" alt=""/></p>
+<p>&nbsp;</p>
+<p>Verify that node.js is installed on your open stack machine by executing <span class="code">node -v</span></p>
+<p><img src="images/problem3-2.png" width="610" height="53" alt=""/></p>
+<p>&nbsp;</p>
+<p>Start the server with <span class="code">node server.js</span></p>
+<p><img src="images/problem3-3.png" width="692" height="111" alt=""/></p>
+<p>&nbsp;</p>
+<p>From your local machine use a Chrome, or other, browser to access your server at its floating point IP address: For example: <span class="code">http://134.117.216.34:3000/example1.html</span></p>
+<p>If successful you should now be able to see the app provided by the server which is basically the answer code from tutorial 02. </p>
+<p><img src="images/problem3-4.png" width="695" height="430" alt=""/></p>
+<p>&nbsp;</p>
+<p>Congratulations! You now have server running   on a remote machine and can access it through your Carleton floating IP address. </p>
+<p>&nbsp;</p>
+<p class="red">When you have completed these problems create a screen capture video, with sound, that demonstrates you've completed problems by showing that you are accessing the provided server with Chrome using a Carleton http://134.117.XXX.XXX:3000/example1.html URL. Submit your code and readme.txt file (containing your YouTube link) to brightpace. </p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 4) OPTIONAL Keeping Your Server Alive</p>
+<p>&nbsp;</p>
+<p>So far we have been launching  servers from a console  by exectuing <span class="code">node server.js</span>.</p>
+<p>If you do that the server has the console occupied in you don't get a command prompt. If the console window is closed the server is shutdown because it is a child process of the console application's process.</p>
+<p>You could run the server in the background by exectuing </p>
+<p><span class="code">node server.js &amp;</span></p>
+<p>That would return control to the console (and you would get a command prompt). But if you shut down the console the server is still killed because  it's still a child process of the console.</p>
+<p>&nbsp;</p>
+<p>To launch the server and and be able to sever the connection with the console you can exeute </p>
+<p><span class="code">nohup node server.js &amp;</span> </p>
+<p>The <span class="code">nohup</span> (no hang up) linux command will keep the child background process from receiving the hangup SIGNAL when the console is closed. </p>
+<p>You should now be able to exit the console and shut it down leaving your server running to be accessed by another computer. Make sure to execute <span class="code">exit</span> in the console THEN close it's window. (On Windows using PuTTy make sure to exit the console by executing <span class="code">exit</span> and not just closing with the console window with its &quot;X&quot; button -which WILL likely shut down your background server process.)</p>
+<p>Someone should now be able to access your server from another machine using your server's asscociated IP address:</p>
+<p>&nbsp;</p>
+<p>Later if you need to kill a node.js server process that is not represented by a console you can  log into your openstack machine and execute:<br>
+  <span class="code"><br>
+ps aux | grep node</span></p>
+<p>to find the process id and then kill the process with:<br>
+  <br>
+<span class="code">kill -9 PROCESS_ID</span></p>
+<p>&nbsp;</p>
+<hr>
+<h1>Common Error:</h1>
+<p>It's very common to get the following error. </p>
+<p><img src="images/EADDRINUSE ERROR.png" width="798" height="292" alt=""/></p>
+<p>It means you already have another node server running on the target port (3000 in this case). Find that server and shut it down. Typically it's in another terminal window but if it is running on a remote machine there may no longer be a console associated with it. Find the process and kill it as described above.</p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p class="segment-header">&nbsp;</p>
+
+</body>
+</html>
