@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>2406</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			margin-left: 80px;
+			margin-right: 80px;
+		}
+
+		h1,
+		h2,
+		h3 {
+			font-weight: bold;
+			color: blue;
+		}
+
+		p {
+			font-size: large;
+		}
+
+		.red {
+			color: #F00;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.requirement {
+			font-weight: bold;
+			background-color: #6AF37A;
+		}
+
+		.requirement_danger {
+			font-weight: bold;
+			background-color: #F47272
+		}
+
+		.requirement_warning {
+			font-weight: bold;
+			background-color: #F6CA54
+		}
+
+		.requirement_legacy {
+			font-weight: bold;
+			background-color: #DDDDDD
+		}
+
+		.code {
+			font-family: "Courier New", Courier, monospace;
+		}
+
+		.requirement_warning1 {
+			font-weight: bold;
+			background-color: #F7BD36
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>COMP 2406 Winter 2023 Assignment 2: </h1>
+		<h1>There Was A Young Man From Nantucket...</h1>
+		<p>&nbsp;</p>
+		<h1 class="red">Due Wed. Mar. 1 by 10:00pm submitted to <a href="https://brightspace.carleton.ca">brightspace</a></h1>
+		<hr width="100%">
+		<p><b>
+				<font size="+1" color="#FF0000">Revisions:</font>
+			</b></p>
+		<p class="red">Rev 2: I've added a critical intent requirement to make it clear that the server for this assignment must still use only the built in capabilities of node.js and NOT external npm modules.</p>
+		<p class="red">Rev 1: I've changed the wording of critical submission requirement R0.2 to make it more clear what items MUST be in your Readme.txt file and what items are only recommended.</p>
+		<hr width="100%">
+
+		<p>In this assignment you are going build a web app that incorporates not only html DOM elements but also objects rendered on a <span class="code">&lt;canvas&gt;</span> element. Specifically, you will build an app that allows a user to solve a puzzle by dragging words
+			around on the canvas with their mouse. You will then need to reconstruct the text their dragged words represent and have the server determine if the puzzle was solved correctly.</p>
+		<p><span class="badge-danger">Marking:</span> This assignment
+			is based on 20 (green) design requirements numbered <span class="requirement">R1.1</span>...<span class="requirement">R3.9</span> for a total of <span class="red">40</span> marks. </p>
+		<p>Marks are awarded, or deducted, based on requirements as follows. Note: TAs will be running and evaluating your assignment code so we are not requesting a demonstration video for the four term assignments(only for the final project).</p>
+		<table border="1">
+			<tr>
+				<th width="83">Req Type</th>
+				<th width="716">Assignment Grading</th>
+			</tr>
+			<tr>
+				<td><span class="requirement_danger">R0.x</span></td>
+				<td>
+					<p><span class="requirement_danger">Critical Submission and Intent Requirements.</span> Assignment gets 0 if <span class="bold">any</span> critical submission requirement (shown in red) is not met.<br>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td><span class="requirement_warning">R0.x</span></td>
+				<td>
+					<p><span class="requirement_warning">Good Practice Requirements.</span> You lose 2 marks for each good practice requirement (shown in amber) not met.<br>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td><span class="requirement">Rx.x</span></td>
+				<td>
+					<p><span class="requirement">Design Requirements.</span> You earn 2 marks for each design requirement (green) satisfied and well implemented; 1 mark if it's partly met or met but not well implemented; and 0 if it's not met or attempted.</p>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<h2>Submission and Good Programming Practice Requirements</h2>
+		<p>The following requirements pertain to all
+			your assignments regardless of what your application is supposed to do (i.e.
+			regardless of the design requirements). These requirements are to ensure that
+			your code is usable, readable, and maintainable.</p>
+		<p class="text-danger"><span class="badge badge-danger"><span class="requirement_danger">R0.0</span></span> <span class="red">UNIQUENESS REQUIREMENT. The solution
+				and code you submit MUST be unique. That is, it cannot be a copy of, or be too
+				similar to, someone else's code, or other code found elsewhere. You are, however, free to use any code posted on our course website as
+				part of our assignment solution. <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+		<p class="text-danger"><span class="badge badge-danger"><span class="requirement_danger">R0.1</span></span> <span class="red">CODE SUBMISSION ORGANIZATION AND COMPILATION: You should submit all the code files and data files necessary to compile
+				and run your app. The TA's will execute your app by following the instructions you provide in the <span class="code">README.txt</span> file. You must submit a single<span class="code">.zip</span> formatted file to brightspace. (not .rar or
+				.tar or whatever). Though you are permitted to write code on Windows, Linux, or Mac OS the code must be generic enough to be OS agnostic. (See also the the requirement below about not submitting the <span class="code">node_modules</span>
+				directory). Your code must work with at least a current Chrome browser and version 16.x.x of node.js<br>
+				<span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+		<p class="text-danger"><span class="badge badge-danger"><span class="requirement_danger">R0.2</span></span> <span class="red">README FILE: Your submission MUST include a <span class="code">README.txt</span> file (with .txt extension) telling the TA how to setup and
+				run your app. <span class="font-weight-bold">The TA will NOT look into your code to figure out how to start up your app.</span> Here are the critical things your <span class="code">README.txt</span> MUST contain:</span></p>
+		<ul>
+			<li>
+				<p class="text-danger"><span class="red"><span class="font-weight-bold">MUST: Your name, student number. (This is where you claim to be the author.)</span></span></p>
+			</li>
+			
+			<li>
+				<p class="text-danger"><span class="red"><span class="font-weight-bold">MUST: If your code requires external modules (like npm modules) you must tell us what command to run to install them. (e.g. </span><code>npm install</code> or <code>npm install module_name</code>)</span></p>
+			</li>
+			<li>
+				<p class="text-danger"><span class="red"><span class="font-weight-bold">MUST: You must tell us how to launch your server. That is, what command to exectute to launch your code (</span>e.g. <code>node server.js</code>. )</span></p>
+			</li>
+			<li>
+				
+				<p class="text-danger"> <span class="red"><span class="font-weight-bold">MUST: You must tell us what URL to visit with the browser to use your app. (</span>e.g. visit:</span><span
+						class="code">http://localhost:3000/mytest.html?name=Louis</span><span class="red">.)</span></p></li>
+				
+				<p class="text-danger"><span class="red"> If any of the MUST have items are missing we will not grade your assignment (the mark will be 0).</span></p>
+				<p class="text-danger"><span class="red">RECOMMENDED: The following  are recommend but the assignment will still be graded if they are missing. </span></p>
+			<li>
+				<p class="text-danger"><span class="red">Recommended: Have your server output to the console what URLs we should visit with the browser.</span></p>
+	
+				<p class="text-danger"><img src="images/R0.2.png" width="558" height="142" alt="" /></p>
+			</li>
+			
+			<li>
+			<p class="text-danger"><span class="red"><span class="font-weight-bold">Recommended: Version:</span> node.js version number and operating system you tested on your code on.</span></p>
+			</li>
+			<li>
+			<p class="text-danger"><span class="red"><span class="font-weight-bold">Recommended: Version:</span> node.js version number and operating system you tested on your code on.</span></p>
+			</li>
+			
+			<p class="text-danger"><span class="red"><span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+			<p class="text-danger">&nbsp;</p>
+		</ul>
+		<p class="text-danger"><span class="badge badge-danger"><span class="requirement_danger">R0.3</span></span> <span class="red">INTENT REQUIREMENT: The solution
+				and code you submit must comply with the intent of the assignment. For example if you are required to build a node.js/javascript server and you choose to build an apache/PHP server instead you will have violated the intent of the assignment
+				even though the user input-output experience might be the same. As another example, if you are asked to build a &quot;thick client&quot; solution where the server just supplies data and the browser renders it but you build a &quot;thin
+				client&quot; solution where the server renders all the HTML pages you will have violated the intent even though the user's experience would look the same. <br>
+			</span><span class="red"> <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+		<p class="text-danger">&nbsp;</p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.4</span></span> <span class="bold">VARIABLE AND FUNCTION NAMES:</span> All of
+			your variables and functions should have meaningful names that reflect
+			their purpose. Don't follow the convention common in math courses where they
+			say things like: &quot;let x be the number of customers and let y be the number of
+			products...&quot;. Instead call your variables <strong>numberOfCustomers</strong> or <strong>numberOfProducts</strong>. Your program should not have any variables
+			called &quot;x&quot; unless there is a good reason for them to be called &quot;x&quot;. (One
+			exception: It's OK to call simple for-loop counters i,j and k etc. when the
+			context is clear and VERY localized.) Javascript variables don't have types which can help clarify their meaning so choosing good names is even more important. Many functions in javascript are annonymous (have no name) and so the name of the
+			variable that refers to them is even more important.</p>
+		<p>Remember: any fool can write code that a computer will understand; the goal is to write code that we can understand. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span>
+		</p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.5</span></span> <span class="bold">JAVASCRIPT IN STATIC HTML:</span> Your static html pages should NOT make direct reference to javascript functions. Don't do something
+			like the following:</p>
+		<pre>&lt;button type="button" onclick="myFunction()"&gt;Try it&lt;/button&gt;</pre>
+		<p>Instead do something like this:</p>
+		<pre>&lt;button type="button" id="submit_button"&gt;Try it&lt;/button&gt;</pre>
+		<p>and elsewhere in your javascript file say:<br>
+		</p>
+		<pre>document.getElementById('submit_button').addEventListener('click', myFunction)
+</pre>
+		<p><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.6</span></span> <span class="bold">COMMENTS:</span> Comments in your code
+			must coincide with what the code actually does. It is a common bug to modify or cut-and-paste code and forget to modify the comments and so you
+			end up with comments that say one thing and code that actually does another. Don't over-comment your code - instead choose good variable names
+			and function names that make the code &quot;self commenting&quot;. Don't be reluctant to create local variables so that the variable name provides more clarity -there is no prize for having the fewest lines of code. <span
+				class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.7</span></span> <span class="bold">MODULARIZATION:</span> Your client-side and server-side javascript should not be in two giant files. Break you client-side javascript
+			into smaller manageable and readable files and include them individually with <span class="code">&lt;script&gt;</span> tags in your html document. On the server-side use <span class="code">requires</span> or <span class="code">imports</span>
+			appropriately to organize your code into managable size files. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.8</span></span> <span class="bold">BLOATED CODE:</span> If your assigment uses external modules installed with npm, <span class="bold">DON'T</span> submit the <span
+				class="code">node_modules</span> directory with your code (it's potentially huge). Remove that directory and only submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. The TAs will use these
+			files to intall the required modules. NPM modules are platform specific and must be reinstalled on the markers platform (they would have to remove your <span class="code">node_modules</span> directory). <span class="font-weight-bold"><span
+					class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+		<p><span class="badge badge-warning"><span class="requirement_warning">R0.9</span></span> <span class="bold">CITATION REQUIREMENT:</span> If you use code from other sources you should cite the source in comments that appear with the code. If the
+			source is an internet website then put the URL in the comments. You may use bits of code from outside sources but this may not form the complete solution you are handing in.You DON'T have to cite demo code we provide on the course web site or
+			with tutorials and assignments, however that code should not be used for things you post publicly (like on GitHub). <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span>
+		</p>
+		<p class="red">VERY IMPORTANT: Any
+			sample code fragments provided may have bugs (although none are put there intentionally). You must be prepared to find errors in the
+			requirements and sample code. Please report errors so they can be fixed and an assignment
+			revision posted.</p>
+		<hr>
+		<h2>Application Design Requirements</h2>
+		<p>This is a continuation of work started in Tutorial 3. It is intended that you use your answer code or our answer code for Tutorial 3 as a starting point. In that tutorial you had text files of song lyrics served to a user as randomly scrambled
+			words on a canvas which they could drag around with the mouse. Here we want you serve the client scrambled words that represent a poem or phrase and expect the user to drag the words into the correcty phrase order</p>
+		<p>&nbsp;</p>
+		<h2>1) Server-Side Requirements</h2>
+		<p>Note the server for this assignment can be based on the server code from Tutorial 03 and should only need minor modification.<br>
+		</p>
+		<p><span class="requirement_danger">R0.3</span> The server for this assignment must use only the built in capabilites of node.js and NOT use any external npm modules yet.</p>
+		<p><span class="requirement">R1.1</span> The server should be hosted on port 3000 and be reachable from a browser on the same machine by visiting <span class="code">http://localhost:3000/index.html</span> (Your <span
+				class="code">ReadMe.txt</span> file should still remind the TA what specific URL to use to test your application.)</p>
+		<p><span class="requirement">R1.2</span> The server should have a <span class="code">puzzles</span> directory of<span class="code"> .txt</span> files. The puzzles directory should contain at least the following files: <span
+				class="code">puzzle1.txt</span>, <span class="code">puzzle2.txt</span>, and <span class="code">puzzle3.txt</span>. Each files should contain the text of a puzzle phrase or poem that the user is meant to reconstruct.</p>
+		<p><span class="requirement">R1.3</span> <span class="code">puzzle1.txt</span> should be a text file with the following four lines of text. (That way the TAs will have an obvious known puzzle to try and solve with your app.) The others can be more interesting.</p>
+		<pre>
+Roses are red
+Violets are blue
+I like javascript
+And so will you
+</pre>
+		<p><span class="requirement">R1.4</span> <span class="code">puzzle2.txt</span> should be a text file containing a limerick.</p>
+		<p><span class="requirement">R1.5</span> <span class="code">puzzle3.txt</span> should contain single letters in which the user is meant to reconstruct a single word. Note the letters can be implemented with single character strings (as opposed to actual characters).</p>
+		<p>You may add additional puzzle files of your own if you want.</p>
+		<p><span class="requirement">R1.6</span> Your puzzles should be suitable for children and not contain vulgar or inappropriate phrases.		</p>
+		<p><span class="requirement">R1.7</span> You should be able to add new puzzles but simply adding files to the puzzles directory. There should be no modification of the server code required to do this and you should be able to do this while the server is running.	[The	TAs will be dragging their own puzzle file into your puzzles folder while your server is running.]</p>
+		<p><span class="requirement">R1.8</span> The server should not send the puzzle words to the client in the correct order. That is, if the client code was to print the words from the server on its console the words should not be in the intended
+			order. There should be no way of inspecting anything on the client browser (source code or console output) that would give away the intended word order of the puzzle. The client should also NOT be able to see the puzzle text using a URL like <span class="code">http://localhost:3000/puzzles.puzzle1.txt</span>. That is, puzzles should NOT be accessible to the client as a static file request. This suggests that the puzzles folder should NOT be in the folder used to serve static files to the client.</p>
+		<p><span class="requirement">R1.9</span> Your client or server code should not have any references to songs in its code. That is, if you base your code on the tutorial 3 server you must rename all code items that might pertain to songs to pertain to
+			puzzles instead. Variable and function names must reflect what this code is actually about.</p>
+	  <p>&nbsp;</p>
+
+		<h2>2) Client-Server Data Exchange</h2>
+
+		<p><span class="badge-success"><span class="requirement">R2.1</span></span> The server should send the html and other files representing the app when the user visits <span class="code">http://localhost:3000/index.html</span></p>
+		<p><span class="requirement">R2.2</span> The exchange of puzzle data between client and server should be in the form http POST messages and data should be exchanged as JSON object strings.</p>
+	  <p>&nbsp; </p>
+		<h2>3) Client Requirements</h2>
+		<p><span class="requirement">R3.1</span> The client webpage should have an HTML5 canvas area, a text input, and the following buttons: "Get Puzzle", "Solve Puzzle".		</p>
+		<p><span class="requirement">R3.2</span> The client should be able to request a puzzle from the server by typing the &quot;puzzle1&quot;, &quot;puzzle2&quot;, or &quot;puzzle3&quot; in the text field and clicking the &quot;Get Puzzle&quot; button.The
+			client should then display the words from the corresponding text file stored on the server. That is, the client should make a request to the server for the contents of the appropriate file. The words from the file should appear on the clients
+			canvas.  When a puzzle is loaded the  text field should be cleared but the name of the puzzle should appear as html text at the bottom of the interface. See image below.</p>
+		<p><img src="images/GUI1.png" alt="UI2" width="614" height="457"></p>
+		<p>&nbsp;</p>
+		<p><span class="requirement">R3.3</span> When a puzzle is loaded the words shown on the canvas should be randomly located on the canvas<span class="text-danger">.</span> All the words on the canvas must be completely, or mostly, within the canvas boundary. Words should not be outside, or mostly outside, the canvas boundary.</p>
+		<p><span class="requirement">R3.4</span> The user should be able to drag the words around with a their mouse. <span class="text-danger">Moreover, the user should be able to drag from anywhere within the word and not just at the begining of the
+				word.</span></p>
+		<p><span class="requirement">R3.5</span> When the user presses the <span class="bold">Solve Puzzle</span> button the current organization of the words should be shown as lines of HTML text. That is, should reflect how the user dragged the words to form
+			lines of text. (This will be the fun part -trying to figure out from the position of words which ones belong to the same line of text and their order in the line.) You need to preserve the apparent lines of text the user has created and not just the order of all the words. Also the words on the canvas that are considered to form a line should get vertically aligned - that way you can use the solve puzzle button the &quot;clean up the canvas&quot;. You can see that behaviour in the demonstration video provided with the assignment.</p>
+		<p><img src="images/GUI2.png"  alt="UI3" width="552" height="560"></p>
+		<p>&nbsp;</p>
+		<p><span class="requirement">R3.6</span> The colouring of the  html text of the client solutions should indicate whether their current solution is correct or not. The text should be red if the puzzle solution is still incorrect and should be green if the puzzle has been correctly solved. The colouring of the text must be based on CSS styling.</p>
+		<p><span class="requirement">R3.7</span> When dragging words to form lines to text the alignment should not have to be too exact. That is, it is unrealistic to expect users to get words exactly in a line. There must be an appropriate slack in what you accept as a valid line of text.</p>
+		<p><span class="requirement">R3.8</span> Determining whether a puzzle has been solved correctly must be done by the server based on the clients words being sent to it. The server would then respond with an indicator of whether the words were in the correct order or not. Note to be correct only the words need to be in a correct order. The client does not have to preserve the lines. For example both of the following would be considered a correct solution to puzzle1:</p>
+	  <p>&nbsp;</p>
+		<pre>
+		Rose are red
+		Violets are blue
+		We like javascript
+		And so will you
+		</pre>
+	  <pre>
+		Rose are red Violets are blue
+		We like javascript And 
+		so will you
+		</pre>
+		
+		<p><span class="requirement">R3.9</span> The user should be able to request and load a new puzzle at any time by typing puzzle1, puzzle2, etc. in the textfield and pressing the Get Puzzle button or hitting the enter key. That is, the client should not have to first solve a puzzle before loading a new one.</p>
+		<hr width="100%">
+		<h2>Demonstration Video</h2>
+		<p>Here is a YouTube demonstration video showing the intended behaviour and discussing the assignment requirements. </p>
+		<iframe width="187" height="105" src="https://www.youtube.com/embed/PQW5UikKoTE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		
+		<hr>
+	</div>
+</body>
+
+</html>
