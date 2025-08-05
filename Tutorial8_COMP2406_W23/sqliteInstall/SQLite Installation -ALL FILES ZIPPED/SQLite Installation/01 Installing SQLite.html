@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR"
+ content="Microsoft FrontPage 6.0">
+  <title>SQLite Install</title>
+<style type="text/css">
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+	margin-left:80px;
+	margin-right:80px;
+}
+h1, h2, h3 {
+	font-weight: bold;
+	color: blue;
+}
+p, ul, pre {
+		font-size: large;
+}
+
+.red {
+	color: #F00;
+}
+  .bold {
+	font-weight: bold;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+.code {
+	font-family: "Courier New", Courier, monospace;
+}
+table.code {
+	font-family: "Courier New", Courier, monospace;
+	text-align: left;	
+}
+td, th {
+	padding-left: 10px;		
+	}
+.requirement_warning1 {	font-weight: bold;
+	background-color: #F7BD36
+}
+</style>
+</head>
+<body class="arial">
+<br>
+<h1>COMP 2406 Installing SQLite</h1>
+
+<p>SQLite is a free server-less SQL database available from the following 
+site:&nbsp; <a href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a></p>
+<p><img src="images/sqlite_org.png"  alt="sqlite_org"></p>
+<p>SQLite installs and runs on Windows, MacOS, and Linux.</p>
+<p>Here are some guidelines for installing. Please let me know if there are errors or updates I should be aware of.</p>
+<p>You should download &quot;sqlite-tools&quot;  <b>Precompiled Binaries</b> for your 
+operation system (e.g. Windows, Linux, or Mac OS X). Read the instructions in 
+the documentation section for your OS.</p>
+<p><img src="images/download.png" alt="download"></p>
+<hr>
+<h1>Windows:</h1>
+
+<ul>
+<li>Download precompiled binaries for Windows section from <a href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a>.  </li>
+<li>Download <span class="code">sqlite-tools-win32-x86-*.zip</span> file. </li>
+<li>Create a folder C:\&gt;sqlite and unzip the downloaded zip in this folder, which should contain <span class="code">sqldiff.exe, sqlite3_analyzer.exe and sqlite3.exe</span> files (you only need the <span class="code">sqlite3.exe</span> to run the stand alone command line interface. </li>
+<li>Add <span class="code">C:\&gt;sqlite</span> in your PATH environment variable (Google how to do this on Windows if you need to.)</li>
+</ul>
+<p>Execute <span class="code">sqlite3</span> as a command-line command to verify the installation:</p>
+
+
+
+
+<p>&nbsp;</p>
+<p><img src="images/windows_install_verification.png"  alt="session" width="869" height="398"></p>
+<p>Here is a quick screen capture video showing installation on my Windows 10 laptop.</p>
+<video controls>
+  <source src="images/install_sqlite3_windows.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<p>&nbsp;</p>
+<hr>
+<h1>MacOS:</h1>
+<p>MacOS comes with SQLite pre-installed so you should just be able to invoke it from a command terminal. </p>
+<p>Here is a screen capture video of me using the precompiled binary of the sqlite3 command line tool on my Mac.</p>
+<video controls>
+  <source src="images/install_sqlite3_mac.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<p>&nbsp;</p>
+<p>You can, if you prefer, build the sqlite application from source code as follows:</p>
+
+<ul>
+<li>Download <span class="code">sqlite-autoconf-*.tar.gz</span> from <a href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a>. source code section.</li>
+<li>Run the following commands to build the application:</li>
+</ul>
+<pre>
+$tar xvfz sqlite-autoconf-3071502.tar.gz 
+$cd sqlite-autoconf-3071502 
+$./configure --prefix=/usr/local 
+$make 
+$make install 
+</pre>
+<p>Execute sqlite3 in command terminal  to verify the installation:</p>
+<p><img src="images/macOS1.png" alt="session"></p>
+<p>&nbsp;</p>
+<hr>
+<h1>Linux:</h1>
+<p>Linux distributions have SQLite installed already. Again precompiled binaries are available on the sqlite download site.</p>
+<p>Verify the installation by executing the following command in a command terminal</p>
+<pre>
+$sqlite3 SQLite version 3.7.15.2 2013-01-09 11:53:05 
+Enter ".help" for instructions 
+Enter SQL statements terminated with a ";" 
+sqlite&gt;
+</pre>
+<p>If it is not installed you can build and install the application from source code as follows:</p>
+<ul>
+<li>Download <span class="code">sqlite-autoconf-*.tar.gz</span> from <a href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a>. source code section.</li>
+<li>Run the following commands to build the application:</li>
+</ul>
+<pre>
+$tar xvfz sqlite-autoconf-3071502.tar.gz 
+$cd sqlite-autoconf-3071502 
+$./configure --prefix = /usr/local 
+$make 
+$make install
+</pre>
+<hr>
+<h1>Hello World:</h1>
+<p>Try some 
+  basic examples from the sqlite documentation page: <a href="https://www.sqlite.org/cli.html">https://www.sqlite.org/cli.html</a> 
+.</p>
+<p>The application provides a command line shell from which you can 
+create sql databases and run queries. You can also read sql commands from a file 
+using the <span class="code">.read</span> command (see the documentation) and we will use this to create 
+an initial database.</p>
+<p>Here is a simple session example from the documentation page<br>
+&nbsp;</p>
+<div>
+	<blockquote>
+		<pre>$ <b>sqlite3 ex1</b>
+SQLite version 3.6.11
+Enter &quot;.help&quot; for instructions
+Enter SQL statements terminated with a &quot;;&quot;
+sqlite&gt; <b>create table tbl1(one varchar(10), two smallint);</b>
+sqlite&gt; <b>insert into tbl1 values('hello!',10);</b>
+sqlite&gt; <b>insert into tbl1 values('goodbye', 20);</b>
+sqlite&gt; <b>select * from tbl1;</b>
+hello!|10
+goodbye|20
+sqlite&gt; .exit
+$</pre>
+	</blockquote>
+</div>
+<p>&nbsp;</p>
+<p>In the above example a database called ex1 will either be 
+opened, or created if it does not already exist.
+In sqlite3 .commands (i.e. commands that start with a dot) are not SQL 
+directives but rather special instructions for the sqlite3 shell. These dot 
+commands do not end in a semicolon the way SQL commands do. You can see a list of all the available shell commands by execting <span class="courier">.help</span>. We tabulated some of the most useful commands here: <a href="02 SQLite Dot Commands.html">sqlite_dot_commands.html</a> </p>
+
+
+<p>&nbsp;</p>
+<p>Here is how you could run the <span class="code">telephone_switch.sql</span> script if 
+  located in the same directory as your database.  Note it 
+  could take a few minutes to build the database. Once it's done you should use 
+  .tables to see if the tables are there and then try the select * from one of the 
+  tables as shown below.<br>
+  &nbsp;</p>
+<div>
+	<blockquote>
+		<pre>c:\sqlite&gt;sqlite3 example1
+SQLite version 3.7.2
+Enter &quot;.help&quot; for instructions
+Enter SQL statements terminated with a &quot;;&quot;
+sqlite&gt; .read telephone_switch.sql
+sqlite&gt; .tables
+calls services trunk_routes
+facilities subscribers trunks
+lines treatments
+service_subscribers trunk_channels
+sqlite&gt;
+sqlite&gt; .mode column
+sqlite&gt; .header on
+sqlite&gt; select * from subscribers;
+portid name address
+---------- ----------- ------------
+1 Mats Sundin 45 Elgin St.
+2 Jason Allis 46 Elgin St.
+3 Eric Lindro 48 Elgin St.
+4 Bryan MacCa 23 MacLeod S
+5 Steve Nash 1129 Otterso
+6 Michael Jor 1223 Carling
+7 Roger Cleme 14 Hopewell
+...</pre>
+	</blockquote>
+</div>
+<p>&nbsp;</p>
+<hr>
+
+</body></html>
