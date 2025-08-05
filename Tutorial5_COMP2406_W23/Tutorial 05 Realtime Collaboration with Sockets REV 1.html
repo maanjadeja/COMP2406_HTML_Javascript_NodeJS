@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COMP 2406</title>
+<link href="template.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.requirement {	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {	font-weight: bold;
+	background-color: #F6CA54
+}
+</style>
+</head>
+
+<body>
+<p class="header">COMP 2406 - Winter 2023 Tutorial 5</p>
+<p class="header subheader">Real-Time Collaboration with Web Sockets</p>
+<hr/>
+<p>&copy; L.D. Nel 2023</p>
+<hr />
+<p class="red">Revisions will be noted here</p>
+<p class="red">Rev 1: Added some website links that Sean has suggested might be helpful for this tutorial and assignment 3.</p>
+<hr />
+<p class="segment-header">Description:</p>
+<p>There is not a lot of code to write for this tutorial but there is quite a lot to understand before you can do so. <span class="red">Start by watching the accompanying lecture on Real-Time collaboration with WebSockets.</span> Study the demo code carefully until you are thoroughly familiar with it before you start your refactoring. The answer code you write will be based on the socket-based chat servers presented in the course notes: &quot;13 Real-Time Collaboration with Web Sockets&quot; and related video presentation.</p>
+<p>This will also be our first example of asynchronous communcation between client server. That is, the server can send a message to the client without it being in response to request from that client. All the previous tutorials and assignments have used the simpler request-response model  where the server can only &quot;talk&quot; to the clients in response to a request from the client.</p>
+<p></p>
+<p>The purpose of this tutorial is to get you  working using npm's <span class="black-bold">socket.io</span> and web sockets to implement a real-time collaborative application. This introduces the use-case where the server can send data to the client that is not in direct response to a request from that client. This enables real-time collaboration among clients.</p>
+<p>The demo code provided for you implements the collaborative app based on polling (each client keeps asking the server over and over and over for updated information.) Polling is easy to implement but expensive (lots of network traffic) and  not very practical. Here we want to refactor the code to use web sockets instead. <span class="black-bold">Refactoring</span> means to change the internal structure of code without changing what it does. In particular, we will use the <span class="black-bold">socket.io</span> npm module that is very popular for this purpose. This will be our first npm module that is not part of node.js itself.</p>
+<p>Here are some websites that Sean has suggested might be helpful for tutorial 5 and assignment 3 <a href="https://socket.io/docs/v4/emit-cheatsheet/" rel="noreferrer noopener" target="_blank" title="https://socket.io/docs/v4/emit-cheatsheet/" role="button" tabindex="0">https://socket.io/docs/v4/emit-cheatsheet/</a> <a href="https://socket.io/docs/" rel="noreferrer noopener" target="_blank" title="https://socket.io/docs/" role="button" tabindex="0">https://socket.io/docs/</a> <a href="https://socket.io/get-started/chat/" rel="noreferrer noopener" target="_blank" title="https://socket.io/get-started/chat/" role="button" tabindex="0">https://socket.io/get-started/chat/</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" rel="noreferrer noopener" target="_blank" title="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" role="button" tabindex="0">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map</a></p>
+<p>&nbsp;</p>
+<p><span class="red">Important: tutorials are meant to be started and submitted as homework. You can come and get help each week at the your registered tutorial session but it's best to get started before the session.</span></p>
+<p class="red">Tutorial Grading: To get credit for weekly tutorials you need to submit to brightspace your code and a ReadMe.txt file with at least your name, student number and the link to your YouTube screen capture demonstration video. The video should have sound narration and demonstrate that you have met the tutorial requirements. (Make sure your video is &quot;unlisted&quot; and not &quot;private&quot; on YouTube - otherwise we won't be able to view it and it will be counted as missing. Submit a single .zip file with all your contents to Brightspace. Brightspace should allow you to resubmit your file up until the due time and will only keep the most recent submission. Grade is 0,1, or 2 as follows:</p>
+<table border="1">
+  <tr>
+    <th width="83">Mark</th>
+    <th width="716">Tutorial Grading</th>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement_danger">0</span></h1>
+      <p>marks</p></td>
+    <td><p><span class="requirement_danger">No submission or incomplete submission. Submissions without accompanying video get a mark of 0</span>.</p>
+      <p>Note: mark is 0 if any of the following are true:<br>
+      <ul>
+        <li>code missing or won't compile and launch.</li>
+        <li>No demonstration video link or link is broken (e.g. private).</li>
+        <li class="red">NEW: Video must be screen capture (not filming your laptop screen with your phone, for example).</li>
+        <li>Work is copied (not unique).</li>
+        <li>No ReadMe.txt file containing YouTube video link</li>
+        <li>Non .zip compression format (only  .zip is accepted)</li>
+        <li>If using NPM modules you MUST NOT submit the <span class="code">node_modules</span> directory but you MUST submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. </li>
+      </ul>
+      <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement_warning">1</span></h1>
+      <p>mark</p></td>
+    <td><p><span class="requirement_warning">Some, but not enough, requirements met or demonstrated</span>.</p>
+      <p>Note: mark is only 1 if any of the following are true:<br>
+      <ul>
+        <li>Video has no voice narration.</li>
+        <li>Cannot make out (see) your code or mouse in your video.</li>
+        <li>Video is too long (keep under 5 mins - like a live demo).</li>
+        <li>Video is not a demo but rather just shows you coding.</li>
+        <li>Not all requested problems attempted and demonstrated.</li>
+        <li>Code works but it's not good programming style.</li>
+      </ul>
+      <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><h1><span class="requirement">2</span></h1>
+      <p>marks</p></td>
+    <td><p><span class="requirement">All requirements met and demonstrated in accompanying video for required problems.</span></p>
+      <p>Does not include problems labelled as &quot;Optional&quot;</p></td>
+  </tr>
+</table>
+<p class="red"></p>
+<p class="red"><br />
+</p>
+<hr/>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Preliminary:<br />
+</p>
+<p>Open the  the   <span class="code">demo_code</span> folder  and run the  server found there. It has an accompanying <span class="code">html</span> folder from which it will serve the client-side html and javascript files. When the browser requests <span class="code">http://localhost:3000/index.html</span> you should see a browser application that looks similar, but not identical, to that of previous tutorials. </p>
+<p><img src="images/demo1.png" alt="demo1" /></p>
+<p>&nbsp;</p>
+<p>To test the app you need to open several browser windows to the same location. Open two or three browser windows to this location and notice the following.</p>
+<p>You can drag the words around with the mouse on any given client but that will not be part of this exercise.</p>
+<p>You can use the arrow keys to move the blue box around. When you do it also moves in all the other browser clients. This happens because all the clients are continously asking the the server where the blue box is. This code is using <span class="black-bold">polling</span> and it's not a good solution for real-time collaboration.</p>
+<p>Locate the function <span class="code">pollingTimerHandler()</span> in the client-side javascript. Figure out how it works then proceed with the problem exercises.</p>
+<p>WARNING: for debug purposes there might be console output statements in the polling handler and other places that spew out too much information to the console. If that is getting in your way comment out those statements.</p>
+<p>In the course notes there is an example chat server implemented with web sockets using the npm socket.io module. You should use that code as a model and <span class="black-bold">refactor</span> this polling-based application to use socket.io instead.</p>
+<hr>
+<p>&nbsp;</p>
+<p class="segment-header">Problem 1)</p>
+<p>In order to implement a solution using socket.io we need to install the npm socket.io module. Open a terminal to the same directory as your <span class="code">server.js</span> code and execute:</p>
+<p class="code">npm install socket.io</p>
+<p>A <span class="code">node_modules</span> directory will be created as a result. This is our first example of installing a module that is not built into node.js itself. (During installation things will seem to pause but just wait it out until it finishes. There might be some warnings as well which we should be able to ignore. Finally a <span class="code">package.json</span> and <span class="code">package-lock.json</span> will likely be created.</p>
+<p><img src="images/problem1-1.png" alt="" width="1040" height="407"/></p>
+<p>&nbsp;</p>
+<p class="red">IMPORTANT: pay attention to the marking rubric. In this and any other tutorials that use npm modules you MUST NOT submit the <span class="code">node_modules</span> directory with your code. However you MUST submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. Tutorials will get a mark of 0 that do not comply with this requirement.</p>
+<p>[By the way. If you change the folder name where your static files are stored you will need to delete the node_modules directory and re-install the socket.io module.]</p>
+<hr>
+<p>&nbsp;</p>
+<p class="segment-header">Problem 2)</p>
+<p> Modify  <span class="code">server.js</span> organization to resemble that of the socket.io based chat application in the notes (03 Chat Application with Socket.io in the notes on Real-Time Collaboration) . Here we are just setting the server up to make it easier to use socket.io but it won't be using the sockets yet. The code might look something like this. Notice we've made the http server callback a separate <span class="code">handler</span> function which is passed into the <span class="code">.createServer(handler)</span>function call:</p>
+<pre>
+const app = require('http').createServer(<span class="black-bold">handler</span>)
+const io = require('socket.io')(app) //wrap server app in socket io capability
+const fs = require("fs") //need to read static files
+const url = require("url") //to parse url strings
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT) //start server listening on PORT
+
+//...
+
+function <span class="black-bold">handler</span>(request, response) {
+  //...
+}
+</pre>
+<p>&nbsp;</p>
+<p>Launch the server and verify that the application still works as before. It will still be using polling but at least it's set up to incorporate sockets more easily.</p>
+<hr>
+<p>&nbsp;</p>
+<p class="segment-header">Problem 3)</p>
+<p>Now for the main part. Implement the server-side socket code to expect the blue box data to arrive at the socket and to broadcast that data to everyone  who is connected.</p>
+<pre>
+io.on('connection', function(socket){
+  socket.on('blueBoxData', function(data){
+    console.log('RECEIVED BOX DATA: ' + data)
+    //to broadcast message to everyone including sender:
+    io.emit('blueBoxData', data) //broadcast to everyone including sender
+  })
+})
+</pre>
+<p>At this point you can remove all the handling of the box data in the <span class="code">handler()</span> function as it won't be needed anymore.</p>
+<p>Add the script to <span class="code">index.html</span> that requests the client-side <span class="code">socket.io.js</span> javascript:</p>
+<pre>
+    &lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+</pre>
+<p>&nbsp;</p>
+<p>Add the javascript in <span class="code">canvaWithTimer.js</span> to create the client-side socket:</p>
+<pre>
+//connect to server and retain the socket
+//connect to the same host that served the html document
+let socket = io('http://' + window.document.location.host)
+
+
+socket.on('blueBoxData', function(data) {
+  console.log("data: " + data)
+  console.log("typeof: " + typeof data)
+  let locationData = JSON.parse(data)
+  movingBox.x = locationData.x
+  movingBox.y = locationData.y
+  drawCanvas()
+})
+</pre>
+<p>Finally modify everwhere the client-side handlers where the client uses a POST message to send the blue box data to the server to use the socket instead. For example replace like the following:</p>
+	<pre>
+  //update the server with a new location of the moving box
+  let xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("data: " + this.responseText)
+        console.log("typeof: " + typeof this.responseText)
+        //we are expecting the response text to be a JSON string
+      }
+    }
+    xhttp.open("POST", "positionData") //API: .open(METHOD, URL)
+    xhttp.send(jsonString) //API: .send(BODY)
+</pre>
+<p>with </p>
+<pre>
+  //update the server with a new location of the moving box
+  socket.emit('blueBoxData', jsonString)
+  
+</pre>
+<p>[OPTIONAL: If you want change the <span class="code">XMLHttpRequest</span> approach to the <span class="code">fetch()</span> API based approached done in tutorial 3]</p>
+<p>When making these changes be mindful of whether JSON or just plain text is being passed between the client and server. It should be JSON strings representing the blue box location. (If you are unsure print the data object to the console to see what it is.)</p>
+<p>When you have completed all these changes you should be able to move the blue box in one browser with the arrow keys and watch on another browser as the box moves along in a synchronized fashion. </p>
+<p>Congratulations this is a major refactor. The code is no longer using the inefficient polling strategy. The animation probably looks better, but more important you, would now be able to handle much more complex real-time collaboration that would not be possible with polling.</p>
+<p>&nbsp;</p>
+<p><img src="images/demo1.png"  alt="demo2" /></p>
+<p>&nbsp;</p>
+<p class="red">IMPORTANT: since this is a refactor exercise the code does not appear to behave much differently. So make sure to show us in our demonstration video that it is now socket.io code and no longer based on the polling timer.</p>
+<p class="red">When you have completed these problems create a screen capture video, with sound, that demonstrates you've completed problem 3 (it depends on the other problems). Submit your code and readme.txt file (containing your YouTube link) to brightpace. </p>
+<hr>
+<h2>&nbsp;</h2
+>
+<p>&nbsp;</p>
+
+</body>
+</html>
